@@ -1,6 +1,13 @@
 Perfect Aim is a hack tool for FPS games.
 You can stabilize your aim controlling tha recoil and the fire rate.
 
-Libs:
+The first version uses this libs:
 Pynput - Mouse events listener and automation control
 PySimpleGUI - User interface
+
+But this first version can't control the mouse inside games because of DirectX.
+Automation libs as Pynput and PyAutoGUI send commands as VK (virtual keys). 
+New games ignore VK commands to avoid bots, they just accept DirectInput commands.
+
+
+
