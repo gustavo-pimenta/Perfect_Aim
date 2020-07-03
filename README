@@ -9,5 +9,19 @@ But this first version can't control the mouse inside games because of DirectX.
 Automation libs as Pynput and PyAutoGUI send commands as VK (virtual keys). 
 New games ignore VK commands to avoid bots, they just accept DirectInput commands.
 
+Two new versions were made to get DirectInput commands, using two different libs: PyDirectInput and Ctypes
+PyDirectInput just take the PyAutoGUI VK commands and make DirectInput commands.
+Ctypes ensures compatibility with C and allow to call functions in DDL.
+
+In the final project we have 3 versions to use:
+
+Perfect Aim (VK version) - uses virtual keys, for simple games (faster than other versions) 
+Perfect Aim (PyDirectInput) - uses DirectInput commands for DirectX games
+Perfect Aim (Ctypes) - uses C language to call DirectInput commands for DirectX games
+
+All versions works fine.
+Test wich one is the best for you.
+
+
 
 
