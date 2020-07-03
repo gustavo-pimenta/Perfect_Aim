@@ -1,3 +1,16 @@
+import pyautogui
+import pydirectinput
+import time
+
+# pydirectinput.moveTo(100, 150) # Move the mouse to the x, y coordinates 100, 150.
+# pydirectinput.click() # Click the mouse at its current location.
+# pydirectinput.click(200, 220) # Click the mouse at the x, y coordinates 200, 220.
+# pydirectinput.move(None, 30) # Move mouse 10 pixels down, that is, move the mouse relative to its current position.
+# pydirectinput.doubleClick() # Double click the mouse at the
+# pydirectinput.press('esc') # Simulate pressing the Escape key.
+# pydirectinput.keyDown('shift')
+# pydirectinput.keyUp('shift')
+
 from pynput.mouse import Listener, Button, Controller
 import PySimpleGUI as sg
 import time
@@ -95,7 +108,7 @@ with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listen
                     single, multiple, recoil_size, fire_rate, start_stop = Iniciar(janela) # get window informations
                     
                     if (shoot==True):
-                        mouse.move(0, recoil_size) # move the mouse
+                        pydirectinput.move(0, int(recoil_size)) # PyDirectInput move the mouse
                         shoot=False
                     if (start_stop == 'Stop (or scroll-up)') or (scroll_up == True):
                         break_program = True
@@ -106,13 +119,19 @@ with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listen
                     single, multiple, recoil_size, fire_rate, start_stop = Iniciar(janela) # get window informations
 
                     if (shoot==True):
-                        mouse.move(0, recoil_size) # move the mouse
+                        pydirectinput.move(0, int(recoil_size)) # PyDirectInput move the mouse
                         time.sleep((0.5-((fire_rate-0.001)/200))) # set the fire rate interval (at least 0.001 to avoid a speed problem)
                     if (start_stop == 'Stop (or scroll-up)') or (scroll_up == True):
                         break_program = True
                         scroll_up = False
                 
     listener.join()
+
+
+
+
+
+
 
 
 
