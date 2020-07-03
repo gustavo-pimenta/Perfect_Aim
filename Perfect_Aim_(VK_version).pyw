@@ -33,8 +33,6 @@ def on_click(x, y, button, pressed): # function detects any click of the mouse
     elif (str(press[2]) == 'Button.middle'): # start and pause
         if (bool(press[3])==True):
             scroll_button=True
-            print('scroll_button=',scroll_button)
-
 
 sg.theme('DarkAmber') # window theme
 
@@ -64,8 +62,7 @@ def Iniciar(self): # get window informations
     recoil_size = values['recoil_size']
     fire_rate = values['fire_rate']
     start_stop = button 
-        
-    # print(single, multiple, recoil_size, fire_rate, start_stop)
+
     return single, multiple, recoil_size, fire_rate, start_stop
     
 
@@ -74,7 +71,6 @@ with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listen
     while True: # program main loop
         
         single, multiple, recoil_size, fire_rate, start_stop = Iniciar(janela) # get window informations
-        # print(start_stop)
         
         if start_stop == sg.WIN_CLOSED: 
             break
