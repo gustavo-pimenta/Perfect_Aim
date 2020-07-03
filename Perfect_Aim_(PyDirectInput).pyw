@@ -1,6 +1,8 @@
 import pyautogui
 import pydirectinput
 import time
+from pynput.mouse import Listener, Button, Controller
+import PySimpleGUI as sg
 
 # pydirectinput.moveTo(100, 150) # Move the mouse to the x, y coordinates 100, 150.
 # pydirectinput.click() # Click the mouse at its current location.
@@ -11,15 +13,11 @@ import time
 # pydirectinput.keyDown('shift')
 # pydirectinput.keyUp('shift')
 
-from pynput.mouse import Listener, Button, Controller
-import PySimpleGUI as sg
-import time
 
 mouse = Controller() # var to control the mouse
 shoot = False # trigger to the function
 break_program = True # break the main loop if True
-scroll_up = False # break the main loop if True
-scroll_down = False # start the main loop if True
+scroll_button = False # True if scroll button be pressed 
 start_by_scroll = False # start the main loop if True
 
 # recoil_size = number of pixels of the recoil
@@ -30,32 +28,31 @@ def on_move(x, y): # function detects the move of the mouse
     pass
 
 def on_scroll(x, y, dx, dy): # function detects the scroll of the mouse
-    global scroll_up, scroll_down
-    if (dy == 1):
-        scroll_up = True
-        scroll_down = False
-    if (dy == -1):
-        scroll_up = False
-        scroll_down = True
+   pass
     
-
 def on_click(x, y, button, pressed): # function detects any click of the mouse
-    global shoot
+    global shoot, scroll_button
     shoot=False
     press=(x, y, button, pressed) # save all mouse status when detect a click 
 
-    # loop to set the trigger when the left button be pressed or released
+    # set the trigger when the left button be pressed or released
     if (str(press[2]) == 'Button.left'):
         if (bool(press[3])==True):
-            shoot=True
+            shoot=True          
         else:
             shoot=False
+
+    elif (str(press[2]) == 'Button.middle'): # start and pause
+        if (bool(press[3])==True):
+            scroll_button=True
+            print('scroll_button=',scroll_button)
 
 
 sg.theme('DarkAmber') # window theme
 
 #create the window interface
 layout = [
+    [sg.Text('                                                                                 Made by Pimen_Top')],
     [sg.Text('Fire Mode:')],
     [sg.Radio('Single Shot','shot', key='single', default=True), sg.Radio('Multiple Shot', 'shot', key='multiple', default=False)],  
     [sg.Text('')],
@@ -65,12 +62,11 @@ layout = [
     [sg.Text('Fire Rate:')],
     [sg.Slider(range=(0, 100), orientation='h', size=(50, 15), default_value=80, tick_interval=25, key='fire_rate')],           
     [sg.Text('')],
-    [sg.Text('Made by Pimen_Top    '), sg.Button('Stop (or scroll-up)', size=(18,1)), sg.Button('Start (or scroll-down)', size=(18,1))]   
+    [sg.Button('Start (press scroll button)', size=(26,1)), sg.Button('Stop (press scroll button)', size=(26,1))]  
 ]
 
 janela = sg.Window('Perfect Aim', layout) 
         
-
 def Iniciar(self): # get window informations
 
     button, values = janela.Read(timeout=10) 
@@ -90,30 +86,31 @@ with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listen
     while True: # program main loop
         
         single, multiple, recoil_size, fire_rate, start_stop = Iniciar(janela) # get window informations
-        print(start_stop)
+        # print(start_stop)
         
         if start_stop == sg.WIN_CLOSED: 
             break
 
-        if scroll_down == True:
+        if scroll_button==True:
             start_by_scroll=True
-            scroll_down=False
+            scroll_button=False
 
-        if start_stop == 'Start (or scroll-down)' or start_by_scroll==True:     
+        if start_stop == 'Start (press scroll button)' or start_by_scroll==True:     
             break_program=False
-            start_by_scroll=False
-    
+
             if (single==True):
                 while (break_program == False):
+                    
                     single, multiple, recoil_size, fire_rate, start_stop = Iniciar(janela) # get window informations
                     
                     if (shoot==True):
                         pydirectinput.move(0, int(recoil_size)) # PyDirectInput move the mouse
                         shoot=False
-                    if (start_stop == 'Stop (or scroll-up)') or (scroll_up == True):
+                    if (start_stop == 'Stop (press scroll button)') or (scroll_button==True):
                         break_program = True
-                        scroll_up = False
-
+                        scroll_button = False
+                        start_by_scroll = False
+                        
             if (multiple==True):
                 while (break_program == False):
                     single, multiple, recoil_size, fire_rate, start_stop = Iniciar(janela) # get window informations
@@ -121,11 +118,13 @@ with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listen
                     if (shoot==True):
                         pydirectinput.move(0, int(recoil_size)) # PyDirectInput move the mouse
                         time.sleep((0.5-((fire_rate-0.001)/200))) # set the fire rate interval (at least 0.001 to avoid a speed problem)
-                    if (start_stop == 'Stop (or scroll-up)') or (scroll_up == True):
+                    if (start_stop == 'Stop (press scroll button)') or (scroll_button==True):
                         break_program = True
-                        scroll_up = False
-                
+                        scroll_button = False
+                        start_by_scroll = False
+              
     listener.join()
+
 
 
 

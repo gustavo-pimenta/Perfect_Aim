@@ -30,11 +30,10 @@ def on_click(x, y, button, pressed): # function detects any click of the mouse
         else:
             shoot=False
 
-    elif (str(press[2]) == 'Button.middle'): # start and pause 
+    elif (str(press[2]) == 'Button.middle'): # start and pause
         if (bool(press[3])==True):
             scroll_button=True
             print('scroll_button=',scroll_button)
-
 
 
 sg.theme('DarkAmber') # window theme
@@ -56,7 +55,6 @@ layout = [
 
 janela = sg.Window('Perfect Aim', layout) 
         
-
 def Iniciar(self): # get window informations
 
     button, values = janela.Read(timeout=10) 
