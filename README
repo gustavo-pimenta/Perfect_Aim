@@ -1,7 +1,18 @@
 Perfect Aim is a hack tool for FPS games.
 You can stabilize your aim controlling tha recoil and the fire rate.
 
-The first version uses this libs:
+3 different versions to use:
+
+Version 1 Perfect Aim (VK version) - uses virtual keys, for simple games (faster than other versions) 
+Version 2 Perfect Aim (Ctypes) - uses C language to call DirectInput commands for DirectX games (the best version)
+Version 3 Perfect Aim (PyDirectInput) - uses DirectInput commands for DirectX games (slow version)
+
+All versions works fine, you can use the EXE file or the python script.
+Test wich one is the best for you.
+
+---------------------------------------------------------------------------------------------------------------------
+
+The first version was made using the libs:
 Pynput - Mouse events listener and automation control
 PySimpleGUI - User interface
 
@@ -13,14 +24,8 @@ Two new versions were made to get DirectInput commands, using two different libs
 PyDirectInput just take the PyAutoGUI VK commands and make DirectInput commands.
 Ctypes ensures compatibility with C and allow to call functions in DDL.
 
-In the final project we have 3 versions to use:
 
-Perfect Aim (VK version) - uses virtual keys, for simple games (faster than other versions) 
-Perfect Aim (PyDirectInput) - uses DirectInput commands for DirectX games (slow version)
-Perfect Aim (Ctypes) - uses C language to call DirectInput commands for DirectX games
 
-All versions works fine.
-Test wich one is the best for you.
 
 
 
